@@ -68,11 +68,6 @@ public class Worker implements Comparable<Worker> {
      */
     @Override
     public int compareTo(@NotNull Worker o) {
-        if (o.workHour > this.workHour) {
-            return -1;
-        } else if (o.workHour < this.workHour) {
-            return 1;
-        } else
-            return 0;
+        return Integer.compare(this.workHour, o.workHour);
     }
 }
