@@ -1,17 +1,19 @@
 package hu.nive.ujratervezes.zarovizsga.digitscounter;
 
-import java.util.Objects;
+import java.util.HashSet;
+import java.util.Set;
 
 public class DigitsCounter {
     public int getCountOfDigits(String input) {
-        int counter = 0;
-        if (!Objects.isNull(input)) {
-            for (int i = 0; i <= 9; i++) {
-                if (input.contains("" + i)) {
-                    counter++;
-                }
+        if (input == null) {
+            return 0;
+        }
+        Set<Character> chars = new HashSet<>();
+        for (char item : input.toCharArray()) {
+            if (Character.isDigit(item)) {
+                chars.add(item);
             }
         }
-        return counter;
+        return chars.size();
     }
 }

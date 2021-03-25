@@ -28,15 +28,14 @@ public class WorkHours {
     }
 
     private void createAndAddWorker(@NotNull String line) {
-        String[] splitted = line.split(",");
-        String name = splitted[0];
-        int workHour = Integer.parseInt(splitted[1]);
-        LocalDate workDay = LocalDate.parse(splitted[2]);
+        String[] parts = line.split(",");
+        String name = parts[0];
+        int workHour = Integer.parseInt(parts[1]);
+        LocalDate workDay = LocalDate.parse(parts[2]);
         workers.add(new Worker(name, workHour, workDay));
     }
 
     private String getMinWorkTimeWorker() {
-        Collections.sort(workers);
-        return workers.get(0).getName() + ": " + workers.get(0).getWorkDay().toString();
+        return Collections.min(workers, new Worker.WorkHourComparator()).getNameAndWorkDayString();
     }
 }

@@ -17,12 +17,9 @@ public class DogTypes {
     }
 
     public List<String> getDogsByCountry(String country) {
-        try (
-                Connection conn = dataSource.getConnection();
-                PreparedStatement stmt =
-                        conn.prepareStatement("SELECT `name` FROM `dog_types` WHERE `country` = ? ORDER BY `name` ASC;")
-        ) {
-            stmt.setString(1, country.toUpperCase());
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement("SELECT lower(`name`) AS `name` FROM `dog_types` WHERE `country` = upper(?) ORDER BY `name` ASC;")) {
+            stmt.setString(1, country);
             stmt.executeUpdate();
             return executeQuery(stmt);
         } catch (SQLException sqle) {
@@ -32,12 +29,10 @@ public class DogTypes {
 
     private List<String> executeQuery(PreparedStatement stmt) {
         List<String> result = new ArrayList<>();
-        try (
-                ResultSet rs = stmt.executeQuery()
-        ) {
+        try (ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 String name = rs.getString("name");
-                result.add(name.toLowerCase());
+                result.add(name);
             }
             return result;
         } catch (SQLException sqle) {

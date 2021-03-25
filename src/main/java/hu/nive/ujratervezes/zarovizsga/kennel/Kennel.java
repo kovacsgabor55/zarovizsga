@@ -2,10 +2,9 @@ package hu.nive.ujratervezes.zarovizsga.kennel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Kennel {
-    private List<Dog> dogs = new ArrayList<>();
+    private final List<Dog> dogs = new ArrayList<>();
 
     public List<Dog> getDogs() {
         return new ArrayList<>(dogs);
@@ -22,16 +21,12 @@ public class Kennel {
     }
 
     public Dog findByName(String name) {
-        Dog result = null;
         for (Dog item : dogs) {
-            if (item.name.equals(name)) {
-                result = item;
+            if (item.getName().equals(name)) {
+                return item;
             }
         }
-        if (Objects.isNull(result)) {
-            throw new IllegalArgumentException("Cannot find dog: " + name);
-        }
-        return result;
+        throw new IllegalArgumentException("Cannot find dog: " + name);
     }
 
     public void playWith(String name, int hours) {
